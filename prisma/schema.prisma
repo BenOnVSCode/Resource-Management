@@ -1,0 +1,22 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql" // Change this to your database provider (e.g., mysql, sqlite)
+  url      = env("DATABASE_URL") // Your database connection string
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Resource {
+  id          Int      @id @default(autoincrement())
+  userId      String   
+  title       String
+  description String?
+  link        String?
+  createdTime DateTime @default(now())
+  category    String?
+
+  @@index([userId]) 
+}
