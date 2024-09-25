@@ -9,14 +9,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  userId    String // Reference to the Clerk user ID
+  resources Resource[] // One category can have multiple resources
+}
+
 model Resource {
-  id          Int      @id @default(autoincrement())
-  userId      String   
+  id          String    @id @default(cuid())
   title       String
   description String?
-  link        String?
-  createdTime DateTime @default(now())
-  category    String?
-
-  @@index([userId]) 
+  link        String
+  categoryId  String // Optional reference to the category
+  userId      String // Reference to the Clerk user ID
+  category    Category @relation(fields: [categoryId], references: [id]) // Each resource can have one category
 }

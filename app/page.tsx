@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Search } from "./components/search";
-import { Filter } from "./components/filter";
-import { Resource } from "./components/resource";
-import { New } from "./components/new";
+import { Search } from "../components/search";
+import { Filter } from "../components/filter";
+import { Resource } from "../components/resource";
+import { New } from "../components/new";
 
 export default function Home() {
   return (

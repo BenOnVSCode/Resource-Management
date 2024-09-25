@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Provider } from "@/store/Provider";
 import {
   ClerkProvider,
   UserButton
@@ -23,10 +24,13 @@ export default function RootLayout({
 				<body
 					className={`${poppins.className} antialiased min-h-screen bg-[#f5f5f5]`}
 				>
-					{children}
-          <div className="absolute top-4 right-4">
-            <UserButton />
-          </div>
+					<Provider>
+						{children}
+						<div className="absolute top-4 right-4">
+							<UserButton />
+						</div>
+					</Provider>
+					
 				</body>
 			</html>
 		</ClerkProvider>

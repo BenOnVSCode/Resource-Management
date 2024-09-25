@@ -3,8 +3,9 @@ import { prisma } from '../../../lib/prisma';
 import { getAuth } from '@clerk/nextjs/server'; 
 import { NextApiRequest } from 'next';
 
+
 export async function POST(request: NextApiRequest) {
-    const { title, description, link, category } = await request.body();
+    const { title, description, link, categoryId } = await request.body()// Changed to categoryId
     const { userId } = getAuth(request);
 
     if (!userId) {
@@ -17,7 +18,7 @@ export async function POST(request: NextApiRequest) {
             title,
             description,
             link,
-            category,
+            categoryId, // Use categoryId instead of category
         },
     });
 
@@ -33,13 +34,14 @@ export async function GET(request: NextRequest) {
 
     const resources = await prisma.resource.findMany({
         where: { userId: userId },
+        include: { category: true }, // Include category in the response
     });
 
     return NextResponse.json(resources);
 }
 
-export async function PUT(request: NextRequest) {
-    const { id, title, description, link, category } = await request.json();
+export async function PUT(request: NextApiRequest) {
+    const { id, title, description, link, categoryId } = await request.body(); // Changed to categoryId
     const { userId } = getAuth(request);
 
     if (!userId) {
@@ -56,14 +58,14 @@ export async function PUT(request: NextRequest) {
 
     const updatedResource = await prisma.resource.update({
         where: { id: id },
-        data: { title, description, link, category },
+        data: { title, description, link, categoryId }, // Use categoryId instead of category
     });
 
     return NextResponse.json(updatedResource);
 }
 
-export async function DELETE(request: NextRequest) {
-    const { id } = await request.json();
+export async function DELETE(request: NextApiRequest) {
+    const { id } = await request.body();
     const { userId } = getAuth(request);
 
     if (!userId) {
